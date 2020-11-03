@@ -10,11 +10,7 @@ public class TicTacToe {
 		System.out.println("Welcome to TicTacToe");
 		populateBoard();
 		player = selectXorO();
-		if (player == 'X') {
-			computer = 'O';
-		} else {
-			computer = 'X';
-		}
+		computer = player == 'X' ? 'O' : 'X';
 		System.out.println(player + " is player " + computer + " is computer");
 		showBoard();
 		makeaMove();
@@ -25,11 +21,15 @@ public class TicTacToe {
 		while (true) {
 			System.out.println("Enter a slot to place " + player);
 			int slot = scan.nextInt();
-			if (board[slot] == ' ') {
-				board[slot] = player;
-				break;
+			if (slot >= 1 && slot <= 9) {
+				if (board[slot] == ' ') {
+					board[slot] = player;
+					break;
+				} else {
+					System.out.println("slot already taken,Enter again");
+				}
 			} else {
-				System.out.println("Invalid choice,Enter again");
+				System.out.println("Invalid choice.Enter again");
 			}
 		}
 		showBoard();
@@ -39,6 +39,7 @@ public class TicTacToe {
 	private static void showBoard() {
 		for (int i = 1; i < board.length; i = i + 3) {
 			System.out.println("|" + board[i] + " |" + board[i + 1] + " |" + board[i + 2] + " |");
+			System.out.println("-----------");
 		}
 	}
 
@@ -47,11 +48,9 @@ public class TicTacToe {
 		Scanner scan = new Scanner(System.in);
 		while (true) {
 			System.out.println("Select either X or O");
-			player = scan.next().charAt(0);
-			if (player == 'x' || player == 'X') {
-				return 'X';
-			} else if (player == 'o' || player == 'O') {
-				return 'O';
+			player = scan.next().toUpperCase().charAt(0);
+			if (player == 'X' || player == 'O') {
+				return player;
 			} else {
 				System.out.println("Invalid choice,Enter again");
 				continue;
