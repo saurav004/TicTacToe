@@ -15,6 +15,14 @@ public class TicTacToe {
 			computer = 'X';
 		}
 		System.out.println(player + " is player " + computer + " is computer");
+
+		showBoard();
+	}
+
+	private static void showBoard() {
+		for (int i = 1; i < board.length; i = i + 3) {
+			System.out.println("| " + board[i] + " | " + board[i + 1] + " | " + board[i + 2] + " |");
+		}
 	}
 
 	private static char selectXorO() {
