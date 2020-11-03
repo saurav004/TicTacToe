@@ -18,12 +18,20 @@ public class TicTacToe {
 	}
 
 	private static char selectXorO() {
-
+		char player = 'X';
 		Scanner scan = new Scanner(System.in);
-		System.out.println("Select X or O");
-		char player = scan.next().charAt(0);
-		return player;
-
+		while (true) {
+			System.out.println("Select either X or O");
+			player = scan.next().charAt(0);
+			if (player == 'x' || player == 'X') {
+				return 'X';
+			} else if (player == 'o' || player == 'O') {
+				return 'O';
+			} else {
+				System.out.println("Invalid choice,Enter again");
+				continue;
+			}
+		}
 	}
 
 	static void populateBoard() {
