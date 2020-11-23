@@ -138,6 +138,7 @@ public class TicTacToe {
 				case 2:
 					line[0] = boardCopy[2] + "" + boardCopy[5] + "" + boardCopy[8];
 					line[1] = boardCopy[1] + "" + boardCopy[2] + "" + boardCopy[3];
+					line[2] = "";
 					break;
 				case 3:
 					line[0] = boardCopy[3] + "" + boardCopy[5] + "" + boardCopy[7];
@@ -147,6 +148,7 @@ public class TicTacToe {
 				case 4:
 					line[0] = boardCopy[1] + "" + boardCopy[4] + "" + boardCopy[7];
 					line[1] = boardCopy[4] + "" + boardCopy[5] + "" + boardCopy[6];
+					line[2] = "";
 					break;
 				case 5:
 					line[0] = boardCopy[2] + "" + boardCopy[5] + "" + boardCopy[8];
@@ -156,6 +158,7 @@ public class TicTacToe {
 				case 6:
 					line[0] = boardCopy[3] + "" + boardCopy[6] + "" + boardCopy[9];
 					line[1] = boardCopy[4] + "" + boardCopy[5] + "" + boardCopy[6];
+					line[2] = "";
 					break;
 				case 7:
 					line[0] = boardCopy[1] + "" + boardCopy[4] + "" + boardCopy[7];
@@ -165,6 +168,7 @@ public class TicTacToe {
 				case 8:
 					line[0] = boardCopy[2] + "" + boardCopy[5] + "" + boardCopy[8];
 					line[1] = boardCopy[7] + "" + boardCopy[8] + "" + boardCopy[9];
+					line[2] = "";
 					break;
 				case 9:
 					line[0] = boardCopy[1] + "" + boardCopy[5] + "" + boardCopy[9];
@@ -172,17 +176,14 @@ public class TicTacToe {
 					line[2] = boardCopy[3] + "" + boardCopy[6] + "" + boardCopy[9];
 					break;
 				}
-				for(int i=0;i<3;i++) {
-				if (line.equals("XXX")) {
-
-				} else if (line.equals("OOO")) {
-
+				for (int i = 0; i < 3; i++) {
+					if (line[i].equals(computer + "" + computer + "" + computer)) {
+						return j;
+					} else
+						return randomValue;
 				}
 			}
 		}
-		
-
-	}
 		return 0;
 	}
 
