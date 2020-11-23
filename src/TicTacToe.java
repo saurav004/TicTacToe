@@ -10,17 +10,18 @@ public class TicTacToe {
 	static int computerId = 1;
 
 	public static void main(String[] args) {
-		String winner = "";
 		System.out.println("Welcome to TicTacToe");
 		populateBoard();
 		selectXorO();
 		System.out.println(player + " is player " + computer + " is computer");
 		showBoard();
-		User = tossToDecideWhoPlaysFirst();
-		if (User == 0)
-			System.out.println("player moves first");
-		else
-			System.out.println("computer moves first");
+		tossToDecideWhoPlaysFirst();
+		playGame();
+
+	}
+
+	public static void playGame() {
+		String winner = "";
 		while (winner == "") {
 			makeaMove();
 			winner = checkWinner();
@@ -88,9 +89,14 @@ public class TicTacToe {
 		return "";
 	}
 
-	private static int tossToDecideWhoPlaysFirst() {
+	private static void tossToDecideWhoPlaysFirst() {
 		Random toss = new Random();
-		return toss.nextInt(2);
+		User = toss.nextInt(2);
+		if (User == 0)
+			System.out.println("player moves first");
+		else
+			System.out.println("computer moves first");
+
 	}
 
 	private static void makeaMove() {
@@ -106,7 +112,7 @@ public class TicTacToe {
 				System.out.println("Enter a slot to place " + entry);
 				slot = scan.nextInt();
 			} else
-				slot = checkWinningMove();
+				slot = findWinningMove(computerId);
 			if (slot >= 1 && slot <= 9) {
 				if (isSpaceFree(slot)) {
 					board[slot] = entry;
@@ -122,13 +128,19 @@ public class TicTacToe {
 
 	}
 
-	private static int checkWinningMove() {
-		Random random = new Random();
-		int randomValue = random.nextInt(9) + 1;
-		char[] boardCopy = board;
+	private static int findWinningMove(int checkingWinFor) {
+		char[] boardCopy = new char[board.length];
+		for (int i = 1; i < board.length; i++) {
+			boardCopy[i] = board[i];
+		}
+		String[] line = new String[3];
 		for (int j = 1; j < 10; j++) {
 			if (isSpaceFree(j)) {
-				String[] line = new String[4];
+				if (checkingWinFor == 0) {
+					boardCopy[j] = player;
+				} else {
+					boardCopy[j] = computer;
+				}
 				switch (j) {
 				case 1:
 					line[0] = boardCopy[1] + "" + boardCopy[2] + "" + boardCopy[3];
@@ -143,9 +155,10 @@ public class TicTacToe {
 				case 3:
 					line[0] = boardCopy[3] + "" + boardCopy[5] + "" + boardCopy[7];
 					line[1] = boardCopy[3] + "" + boardCopy[6] + "" + boardCopy[9];
-					line[2] = boardCopy[3] + "" + boardCopy[6] + "" + boardCopy[9];
+					line[2] = boardCopy[1] + "" + boardCopy[2] + "" + boardCopy[3];
 					break;
 				case 4:
+
 					line[0] = boardCopy[1] + "" + boardCopy[4] + "" + boardCopy[7];
 					line[1] = boardCopy[4] + "" + boardCopy[5] + "" + boardCopy[6];
 					line[2] = "";
@@ -176,15 +189,52 @@ public class TicTacToe {
 					line[2] = boardCopy[3] + "" + boardCopy[6] + "" + boardCopy[9];
 					break;
 				}
-				for (int i = 0; i < 3; i++) {
-					if (line[i].equals(computer + "" + computer + "" + computer)) {
-						return j;
-					} else
-						return randomValue;
+				if (checkingWinFor == computerId) {
+					for (int i = 0; i < 3; i++) {
+						if (line[i].equals(computer + "" + computer + "" + computer)) {
+							return j;
+						}
+					}
+					boardCopy[j] = ' ';
+				} else if (checkingWinFor == playerId) {
+					for (int k = 0; k < 3; k++) {
+						if (line[k].equals(player + "" + player + "" + player)) {
+							return j;
+						}
+					}
+					boardCopy[j] = ' ';
 				}
 			}
 		}
-		return 0;
+		if (checkingWinFor == computerId) {
+			return moveToBlockOpponent();
+		} else {
+			return 0;
+		}
+	}
+
+	private static int moveToBlockOpponent() {
+		int blockingMove = findWinningMove(playerId);
+		if (blockingMove > 0) {
+			return blockingMove;
+		} else {
+			return selectOneCorner();
+		}
+	}
+
+	private static int selectOneCorner() {
+		Random random = new Random();
+		int randomValue = random.nextInt(9) + 1;
+		if (isSpaceFree(1))
+			return 1;
+		else if (isSpaceFree(3))
+			return 3;
+		else if (isSpaceFree(7))
+			return 7;
+		else if (isSpaceFree(9))
+			return 9;
+		else
+			return randomValue;
 	}
 
 	public static int playComputerMove() {
@@ -200,6 +250,7 @@ public class TicTacToe {
 			System.out.println("|" + board[i] + " |" + board[i + 1] + " |" + board[i + 2] + " |");
 			System.out.println("-----------");
 		}
+		System.out.println();
 	}
 
 	private static void selectXorO() {
