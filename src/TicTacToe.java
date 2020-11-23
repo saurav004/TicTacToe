@@ -11,16 +11,33 @@ public class TicTacToe {
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to TicTacToe");
+		playGame();
+	}
+
+	private static void askIfWantToPlayAgain() {
+		Scanner scan = new Scanner(System.in);
+		String choice = null;
+		int end = 0;
+		while (end == 0) {
+			System.out.println("Enter YES/yes if you want to play again OR Enter NO/no if you want to exit ");
+			choice = scan.next().toUpperCase();
+			System.out.println(choice);
+			if (choice.equals("YES")) {
+				playGame();
+			} else if (choice.equals("NO")) {
+				end = 1;
+			} else {
+				System.out.println("Invalid choice,Enter again");
+			}
+		}
+	}
+
+	public static void playGame() {
 		populateBoard();
 		selectXorO();
 		System.out.println(player + " is player " + computer + " is computer");
 		showBoard();
 		tossToDecideWhoPlaysFirst();
-		playGame();
-
-	}
-
-	public static void playGame() {
 		String winner = "";
 		while (winner == "") {
 			makeaMove();
@@ -41,6 +58,7 @@ public class TicTacToe {
 			else
 				User = 0;
 		}
+		askIfWantToPlayAgain();
 	}
 
 	private static String checkWinner() {
