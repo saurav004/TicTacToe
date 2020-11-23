@@ -237,10 +237,6 @@ public class TicTacToe {
 			return randomValue;
 	}
 
-	public static int playComputerMove() {
-		return 0;
-	}
-
 	public static boolean isSpaceFree(int index) {
 		return board[index] == ' ';
 	}
