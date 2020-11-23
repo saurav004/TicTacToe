@@ -223,8 +223,6 @@ public class TicTacToe {
 	}
 
 	private static int selectOneCorner() {
-		Random random = new Random();
-		int randomValue = random.nextInt(9) + 1;
 		if (isSpaceFree(1))
 			return 1;
 		else if (isSpaceFree(3))
@@ -233,6 +231,28 @@ public class TicTacToe {
 			return 7;
 		else if (isSpaceFree(9))
 			return 9;
+		else
+			return checkIfCentreIsFree();
+	}
+
+	private static int checkIfCentreIsFree() {
+		if (isSpaceFree(5))
+			return 5;
+		else
+			return checkIfAnySideIsFree();
+	}
+
+	private static int checkIfAnySideIsFree() {
+		Random random = new Random();
+		int randomValue = random.nextInt(9) + 1;
+		if (isSpaceFree(2))
+			return 2;
+		else if (isSpaceFree(4))
+			return 4;
+		else if (isSpaceFree(6))
+			return 6;
+		else if (isSpaceFree(8))
+			return 8;
 		else
 			return randomValue;
 	}
