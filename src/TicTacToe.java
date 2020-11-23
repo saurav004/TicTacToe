@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -101,9 +100,13 @@ public class TicTacToe {
 			entry = player;
 		else
 			entry = computer;
+		int slot = 0;
 		while (true) {
-			System.out.println("Enter a slot to place " + entry);
-			int slot = scan.nextInt();
+			if (User == 0) {
+				System.out.println("Enter a slot to place " + entry);
+				slot = scan.nextInt();
+			} else
+				slot = checkWinningMove();
 			if (slot >= 1 && slot <= 9) {
 				if (isSpaceFree(slot)) {
 					board[slot] = entry;
@@ -117,6 +120,74 @@ public class TicTacToe {
 		}
 		showBoard();
 
+	}
+
+	private static int checkWinningMove() {
+		Random random = new Random();
+		int randomValue = random.nextInt(9) + 1;
+		char[] boardCopy = board;
+		for (int j = 1; j < 10; j++) {
+			if (isSpaceFree(j)) {
+				String[] line = new String[4];
+				switch (j) {
+				case 1:
+					line[0] = boardCopy[1] + "" + boardCopy[2] + "" + boardCopy[3];
+					line[1] = boardCopy[1] + "" + boardCopy[4] + "" + boardCopy[7];
+					line[2] = boardCopy[1] + "" + boardCopy[5] + "" + boardCopy[9];
+					break;
+				case 2:
+					line[0] = boardCopy[2] + "" + boardCopy[5] + "" + boardCopy[8];
+					line[1] = boardCopy[1] + "" + boardCopy[2] + "" + boardCopy[3];
+					break;
+				case 3:
+					line[0] = boardCopy[3] + "" + boardCopy[5] + "" + boardCopy[7];
+					line[1] = boardCopy[3] + "" + boardCopy[6] + "" + boardCopy[9];
+					line[2] = boardCopy[3] + "" + boardCopy[6] + "" + boardCopy[9];
+					break;
+				case 4:
+					line[0] = boardCopy[1] + "" + boardCopy[4] + "" + boardCopy[7];
+					line[1] = boardCopy[4] + "" + boardCopy[5] + "" + boardCopy[6];
+					break;
+				case 5:
+					line[0] = boardCopy[2] + "" + boardCopy[5] + "" + boardCopy[8];
+					line[1] = boardCopy[1] + "" + boardCopy[5] + "" + boardCopy[9];
+					line[2] = boardCopy[3] + "" + boardCopy[5] + "" + boardCopy[7];
+					break;
+				case 6:
+					line[0] = boardCopy[3] + "" + boardCopy[6] + "" + boardCopy[9];
+					line[1] = boardCopy[4] + "" + boardCopy[5] + "" + boardCopy[6];
+					break;
+				case 7:
+					line[0] = boardCopy[1] + "" + boardCopy[4] + "" + boardCopy[7];
+					line[1] = boardCopy[3] + "" + boardCopy[5] + "" + boardCopy[7];
+					line[2] = boardCopy[7] + "" + boardCopy[8] + "" + boardCopy[9];
+					break;
+				case 8:
+					line[0] = boardCopy[2] + "" + boardCopy[5] + "" + boardCopy[8];
+					line[1] = boardCopy[7] + "" + boardCopy[8] + "" + boardCopy[9];
+					break;
+				case 9:
+					line[0] = boardCopy[1] + "" + boardCopy[5] + "" + boardCopy[9];
+					line[1] = boardCopy[7] + "" + boardCopy[8] + "" + boardCopy[9];
+					line[2] = boardCopy[3] + "" + boardCopy[6] + "" + boardCopy[9];
+					break;
+				}
+				for(int i=0;i<3;i++) {
+				if (line.equals("XXX")) {
+
+				} else if (line.equals("OOO")) {
+
+				}
+			}
+		}
+		
+
+	}
+		return 0;
+	}
+
+	public static int playComputerMove() {
+		return 0;
 	}
 
 	public static boolean isSpaceFree(int index) {
